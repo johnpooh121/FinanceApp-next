@@ -5,10 +5,10 @@ import Link from "next/link";
 export default function Login() {
   return (
     <>
-      <div className="grid grid-rows-3 items-center justify-items-center min-h-[80vh] align-middle font-[family-name:var(--font-geist-sans)]">
+      <div className="grid grid-rows-3 items-center justify-items-center min-h-[80vh] align-middle font-[family-name:var(--font-geist-sans)] m-3 max-h-[80vh]">
         <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
           <h1 className="text-4xl">금융 정보제공 시스템</h1>
-          <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+          <ol className="list-inside list-disc text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
             <li className="mb-2 tracking-[-.01em]">
               국내 주식에 대해 일자별 종가, 거래량, 외국인 보유량, PER 등의
               수치들을 csv로 다운로드할 수 있습니다.

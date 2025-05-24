@@ -26,10 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen grid grid-rows-10`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        <div className="row-start-1 row-end-10">{children}</div>
-        <div className="row-start-10 row-end-11">
+        <div className="flex-col">{children}</div>
+        <div className="sticky top-[100vh]">
           <Footer />
         </div>
       </body>
