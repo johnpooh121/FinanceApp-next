@@ -1,4 +1,4 @@
-import Footer from "@/conmponents/Footer";
+import Footer from "@/conmponents/footer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen grid grid-rows-10`}
       >
-        <div className="">{children}</div>
+        <div className="row-start-1 row-end-10">{children}</div>
         <div className="row-start-10 row-end-11">
           <Footer />
         </div>
