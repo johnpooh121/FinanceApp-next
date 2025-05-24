@@ -16,6 +16,10 @@ axiosUser.interceptors.request.use((config) => {
 axiosUser.interceptors.response.use(
   (res) => res,
   async (error) => {
+    if (!error.response || !error.response.status) {
+      alert("로그인이 되어있지 않습니다!");
+      redirect("/login");
+    }
     if (error.response.status === 401) {
       const { data } = await axios
         .post(`${BE_ENDPOINT}/auth/refresh`)
