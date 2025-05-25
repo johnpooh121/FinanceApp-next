@@ -78,81 +78,94 @@ export default function Download() {
   };
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <h1 className="text-4xl">데이터 다운로드</h1>
-        <ol className="list-inside list-disc text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
+    <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center px-8 pb-20 pt-8 gap-16 sm:px-20 font-geist-sans">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-3xl">
+        <h1 className="text-4xl font-bold text-center sm:text-left">
+          데이터 다운로드
+        </h1>
+
+        <ol className="list-inside list-disc text-sm leading-6 text-center sm:text-left font-geist-mono">
+          <li className="mb-2 tracking-tight">
             KOSPI, KOSDAQ의 원하는 종목을 원하는 기간에 맞춰서 다운로드할 수
             있습니다.
           </li>
-          <li className="mb-2 tracking-[-.01em]">
+          <li className="mb-2 tracking-tight">
             각 유저는 매월 4,000,000 개의 쿼터를 할당받습니다.
           </li>
-          <li className="mb-2 tracking-[-.01em]">
+          <li className="mb-2 tracking-tight">
             데이터를 다운로드할 때마다 쿼터에서 데이터의 행(row)수가 차감됩니다.
           </li>
-          <li className="mb-2 tracking-[-.01em]">
+          <li className="mb-2 tracking-tight">
             각 행의 구조 : 일자 | ISIN | 단축코드 | 종목명 | 시장구분 | 수정종가
             | 시가 | 저가 | 고가 | 대비 | 등락률 | 거래량 | 거래대금 | 시가총액
             | 주식 수 | EPS | PER | BPS | PBR | DPS | DY | 외국인 | 보유량 |
             외국인 | 지분율 | 외국인 | 한도수량 | 외국인 | 한도소진율 | 소속부
           </li>
         </ol>
-        <hr className="border-2 w-full" />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-col">
+        <hr className="border-t-2 w-full" />
+
+        <div className="w-full">
           <form
             method="post"
             action={`${BE_ENDPOINT}/data/query/csv`}
             onSubmit={handleSubmit}
+            className="flex flex-col gap-6"
           >
-            <div className="flex-row">
-              <label className="flex-row">
-                쿼리 기간 시작일:{" "}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <label className="flex flex-col text-sm font-medium">
+                쿼리 기간 시작일
                 <input
                   name="startDate"
                   id="input-startDate"
                   type="date"
-                  className="border-2"
+                  className="border border-gray-300 rounded-md p-2 mt-1"
                   onChange={(e) => setStartDate(e.target.value)}
                   defaultValue={startDate}
                 />
               </label>
-              <label>
-                쿼리 기간 종료일:{" "}
+
+              <label className="flex flex-col text-sm font-medium">
+                쿼리 기간 종료일
                 <input
                   name="endDate"
                   id="input-endDate"
                   type="date"
-                  className=" border-2"
+                  className="border border-gray-300 rounded-md p-2 mt-1"
                   onChange={(e) => setEndDate(e.target.value)}
                   defaultValue={endDate}
                 />
               </label>
             </div>
-            <label>
-              쿼리 종목 코드 리스트 ( 각 줄에 하나씩 입력 ){" "}
+
+            <label className="flex flex-col text-sm font-medium">
+              쿼리 종목 코드 리스트 (각 줄에 하나씩 입력)
               <textarea
                 name="codes"
                 id="input-codes"
+                className="border border-gray-300 rounded-md p-2 mt-1 h-32 resize-none"
                 defaultValue={codes}
-                className="border-2"
                 onChange={(e) => setCodes(e.target.value)}
-              ></textarea>{" "}
+              />
             </label>
-            <label>
-              모든 종목을 쿼리할지 여부 (체크 시 위의 리스트는 무시됨) :{" "}
+
+            <label className="flex items-center gap-2 text-sm font-medium">
               <input
                 name="isAllIssue"
                 id="input-isAllIssue"
                 type="checkbox"
-                className="border-2"
+                className="accent-blue-600"
                 defaultChecked={isAll}
-                onChange={(e) => setIsAll(e.target.value === "on")}
+                onChange={(e) => setIsAll(e.target.checked)}
               />
+              모든 종목을 쿼리할지 여부 (체크 시 위의 리스트는 무시됨)
             </label>
-            <button type="submit" id="download" className="border-2">
+
+            <button
+              type="submit"
+              id="download"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition-colors"
+            >
               다운로드
             </button>
           </form>
