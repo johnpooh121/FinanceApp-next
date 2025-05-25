@@ -11,12 +11,12 @@ dayjs.extend(utc);
 
 export default function Download() {
   const [startDate, setStartDate] = useState(
-    dayjs().utcOffset(9).format("YYYY-MM-DD")
+    dayjs().utcOffset(9).subtract(7, "day").format("YYYY-MM-DD")
   );
   const [endDate, setEndDate] = useState(
     dayjs().utcOffset(9).format("YYYY-MM-DD")
   );
-  const [codes, setCodes] = useState("005930&#13;&#10;000660");
+  const [codes, setCodes] = useState("005930\n000660");
   const [isAll, setIsAll] = useState(false);
 
   useEffect(() => {
@@ -30,35 +30,50 @@ export default function Download() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const { data: newBearer } = await axiosUser.post("/auth/refresh", {}, {});
+    localStorage.setItem("bearer", newBearer);
+
     const formData = new FormData();
-    console.log(startDate);
     formData.append("startDate", startDate);
     formData.append("endDate", endDate);
     formData.append("codes", codes);
     formData.append("isAllIssue", String(isAll));
 
-    console.log(formData);
-    console.log(String(formData));
-    const res = await axiosUser(`${BE_ENDPOINT}/data/query/csv`, {
+    const res = await fetch(`${BE_ENDPOINT}/data/query/csv`, {
       method: "POST",
-      data: { startDate, endDate, codes, isAllIssue: isAll },
+      body: JSON.stringify({ startDate, endDate, codes, isAllIssue: isAll }),
       headers: {
+        "content-type": "application/json",
         authorization: localStorage.getItem("bearer") ?? "",
       },
-      responseType: "blob",
+      credentials: "include",
     });
 
-    if (res.status !== 201) {
-      alert("CSV 다운로드 실패");
-      return;
+    if (!res.ok || !res.body) {
+      throw new Error("다운로드에 실패하였습니다");
     }
 
-    const blob = new Blob([res.data]);
+    const reader = res.body.getReader();
+    const chunks: Uint8Array[] = [];
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value) chunks.push(value);
+    }
+
+    const blob = new Blob(chunks, { type: "text/csv;charset=utf-8;" });
+
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "query.csv";
-    a.click();
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute(
+      "download",
+      `kr-stock-${dayjs().utcOffset(9).format("YYYY-MM-DD--HH-mm-ss")}.csv`
+    );
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
 
