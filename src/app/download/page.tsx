@@ -113,21 +113,9 @@ export default function Download() {
 
         <div className="w-full">
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            <label className="flex items-center gap-2 text-sm font-medium">
-              <input
-                name="sub"
-                id="input-sub"
-                type="checkbox"
-                className="accent-blue-600"
-                defaultChecked={isAll}
-                onChange={(e) => setIsAll(e.target.checked)}
-              />
-              기능 사용 여부 (체크 시 위의 리스트는 무시됨)
-            </label>
-
             <div className="flex flex-col sm:flex-row gap-4">
               <label className="flex flex-col text-sm font-medium">
-                쿼리 기간 시작일
+                시작일
                 <input
                   name="startDate"
                   id="input-startDate"
@@ -139,7 +127,7 @@ export default function Download() {
               </label>
 
               <label className="flex flex-col text-sm font-medium">
-                쿼리 기간 종료일
+                종료일
                 <input
                   name="endDate"
                   id="input-endDate"
@@ -152,7 +140,7 @@ export default function Download() {
             </div>
 
             <label className="flex flex-col text-sm font-medium">
-              쿼리 종목 코드 리스트 (각 줄에 하나씩 입력)
+              가져올 종목 코드 리스트 (각 줄에 하나씩 입력)
               <textarea
                 name="codes"
                 id="input-codes"
@@ -160,6 +148,18 @@ export default function Download() {
                 defaultValue={codes}
                 onChange={(e) => setCodes(e.target.value)}
               />
+            </label>
+
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <input
+                name="sub"
+                id="input-sub"
+                type="checkbox"
+                className="accent-blue-600"
+                defaultChecked={isAll}
+                onChange={(e) => setIsAll(e.target.checked)}
+              />
+              모든 종목을 다 불러올지 (체크 시 위의 리스트는 무시됨)
             </label>
             {quota !== null && (
               <p className="text-sm text-gray-700 font-medium">
