@@ -18,11 +18,14 @@ export default function Download() {
   );
   const [codes, setCodes] = useState("005930\n000660");
   const [isAll, setIsAll] = useState(false);
+  const [quota, setQuota] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axiosUser.post("/auth/refresh", {}, {});
       localStorage.setItem("bearer", response.data);
+      const { data } = await axiosUser.get("/user");
+      setQuota(data.quota ?? null);
     };
     fetchData();
   }, []);
@@ -75,6 +78,9 @@ export default function Download() {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+
+    const { data } = await axiosUser.get("/user");
+    setQuota(data.quota ?? null);
   };
 
   return (
@@ -155,7 +161,15 @@ export default function Download() {
                 onChange={(e) => setCodes(e.target.value)}
               />
             </label>
-
+            {quota !== null && (
+              <p className="text-sm text-gray-700 font-medium">
+                현재 남은 쿼터:{" "}
+                <span className="font-bold text-blue-600">
+                  {quota.toLocaleString()}
+                </span>{" "}
+                rows
+              </p>
+            )}
             <button
               type="submit"
               id="download"
