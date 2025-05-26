@@ -81,7 +81,7 @@ export default function Download() {
     <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center px-8 pb-20 pt-8 gap-16 sm:px-20 font-geist-sans">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-3xl">
         <h1 className="text-4xl font-bold text-center sm:text-left">
-          데이터 다운로드
+          데이터 다운로드 💾
         </h1>
 
         <ol className="list-inside list-disc text-sm leading-6 text-center sm:text-left font-geist-mono">
@@ -106,12 +106,19 @@ export default function Download() {
         <hr className="border-t-2 w-full" />
 
         <div className="w-full">
-          <form
-            method="post"
-            action={`${BE_ENDPOINT}/data/query/csv`}
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-6"
-          >
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <input
+                name="sub"
+                id="input-sub"
+                type="checkbox"
+                className="accent-blue-600"
+                defaultChecked={isAll}
+                onChange={(e) => setIsAll(e.target.checked)}
+              />
+              기능 사용 여부 (체크 시 위의 리스트는 무시됨)
+            </label>
+
             <div className="flex flex-col sm:flex-row gap-4">
               <label className="flex flex-col text-sm font-medium">
                 쿼리 기간 시작일
@@ -147,18 +154,6 @@ export default function Download() {
                 defaultValue={codes}
                 onChange={(e) => setCodes(e.target.value)}
               />
-            </label>
-
-            <label className="flex items-center gap-2 text-sm font-medium">
-              <input
-                name="isAllIssue"
-                id="input-isAllIssue"
-                type="checkbox"
-                className="accent-blue-600"
-                defaultChecked={isAll}
-                onChange={(e) => setIsAll(e.target.checked)}
-              />
-              모든 종목을 쿼리할지 여부 (체크 시 위의 리스트는 무시됨)
             </label>
 
             <button
