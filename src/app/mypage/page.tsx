@@ -105,7 +105,9 @@ export default function StockFilter() {
 
   return (
     <div className="max-w-4xl mx-auto p-8 sm:p-12">
-      <h1 className="text-3xl font-bold mb-6">📬 이메일 알림 설정</h1>
+      <h1 className="text-4xl font-bold text-center sm:text-left mb-6">
+        📬 이메일 알림 설정
+      </h1>
 
       <p className="text-sm text-gray-600 mb-2">
         매일 오전 8시에 조건에 맞는 종목이 있을 경우 알림 이메일이 발송됩니다.
@@ -113,7 +115,7 @@ export default function StockFilter() {
       <p className="text-sm text-gray-600 mb-6">
         조건을 사용하지 않으려면 빈칸으로 두면 됩니다.
       </p>
-
+      <hr className="border-t-2  my-6" />
       <form className="flex flex-col gap-6">
         <label className="flex items-center gap-2 text-sm font-medium">
           <input

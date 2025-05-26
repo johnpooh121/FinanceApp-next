@@ -87,7 +87,7 @@ export default function Download() {
     <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center px-8 pb-20 pt-8 gap-16 sm:px-20 font-geist-sans">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-3xl">
         <h1 className="text-4xl font-bold text-center sm:text-left">
-          데이터 다운로드 💾
+          💾 데이터 다운로드
         </h1>
 
         <ol className="list-inside list-disc text-sm leading-6 text-center sm:text-left font-geist-mono">
