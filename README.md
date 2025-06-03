@@ -10,4 +10,4 @@
 
 repository 실행 명령어 : `pnpm dev`
 
-세부사항은 다음 링크 참조 : https://github.com/johnpooh121/FinanceApp/blob/main/README.md
+세부사항은 다음 링크 참고 : https://github.com/johnpooh121/FinanceApp/blob/main/README.md
